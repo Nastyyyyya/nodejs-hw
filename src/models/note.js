@@ -19,6 +19,12 @@ const noteSchema = new Schema(
       default: 'Todo',
       required: true,
     },
+    // Додаємо обов'язкове поле userId
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     timestamps: true,
