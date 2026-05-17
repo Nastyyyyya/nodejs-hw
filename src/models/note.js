@@ -31,9 +31,7 @@ const noteSchema = new Schema(
     },
   },
   {
-    // Автоматично додає поля createdAt та updatedAt
     timestamps: true,
-    // Прибирає поле __v, яке додає mongoose за замовчуванням
     versionKey: false,
   },
 );
