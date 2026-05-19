@@ -8,13 +8,14 @@ export const connectMongoDB = async () => {
     const mongoUrl = process.env.MONGO_URL;
 
     if (!mongoUrl) {
-      throw new Error('MONGO_URL is not defined in .env');
+      console.error('Configuration error: MONGO_URL is not defined in .env');
+      process.exit(1);
     }
 
     await mongoose.connect(mongoUrl);
     console.log('MongoDB connection established successfully');
   } catch (error) {
-    console.error('Error while setting up mongo connection', error);
-    throw error;
+    console.error('Error while setting up mongo connection:', error.message);
+    process.exit(1);
   }
 };

@@ -5,10 +5,10 @@ import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
-import { logger } from './middlewares/logger.js';
-import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import { errorHandler } from './middlewares/errorHandler.js';
-import { authenticate } from './middlewares/authenticate.js'; 
+import { logger } from './middleware/logger.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { authenticate } from './middleware/authenticate.js';
 
 import notesRouter from './routes/notesRoutes.js';
 import authRouter from './routes/authRoutes.js';
@@ -25,7 +25,7 @@ export const startServer = async () => {
   app.use(logger);
   app.use(
     cors({
-      origin: true, 
+      origin: true,
       credentials: true,
     }),
   );
