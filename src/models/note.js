@@ -17,8 +17,6 @@ const noteSchema = new Schema(
       type: String,
       enum: TAGS,
       default: 'Todo',
-      required: true,
-      index: true,
     },
   },
   {
@@ -26,6 +24,8 @@ const noteSchema = new Schema(
     versionKey: false,
   },
 );
+
+noteSchema.index({ tag: 1 });
 
 noteSchema.index({ title: 'text', content: 'text' });
 
