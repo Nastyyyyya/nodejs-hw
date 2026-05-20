@@ -17,12 +17,10 @@ const noteSchema = new Schema(
       type: String,
       enum: TAGS,
       default: 'Todo',
-      required: true,
     },
-    // Додаємо обов'язкове поле userId
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true,
     },
   },
@@ -32,6 +30,7 @@ const noteSchema = new Schema(
   },
 );
 
+noteSchema.index({ tag: 1, userId: 1 });
 noteSchema.index({ title: 'text', content: 'text' });
 
-export const Note = model('note', noteSchema);
+export const Note = model('Note', noteSchema);

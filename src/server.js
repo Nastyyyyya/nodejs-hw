@@ -5,13 +5,12 @@ import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
-import { logger } from './middlewares/logger.js';
-import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import { errorHandler } from './middlewares/errorHandler.js';
-import { authenticate } from './middlewares/authenticate.js'; 
-
+import { logger } from './middleware/logger.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 import notesRouter from './routes/notesRoutes.js';
 import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -19,26 +18,24 @@ const PORT = process.env.PORT || 3000;
 
 export const startServer = async () => {
   const app = express();
-
   await connectMongoDB();
 
   app.use(logger);
   app.use(
     cors({
-      origin: true, 
+      origin: true,
       credentials: true,
     }),
   );
   app.use(express.json());
   app.use(cookieParser());
 
-  app.use('/auth', authRouter);
-
-  app.use('/notes', authenticate, notesRouter);
+  app.use(authRouter);
+  app.use(notesRouter);
+  app.use(userRouter);
+  app.use(notFoundHandler);
 
   app.use(errors());
-
-  app.use(notFoundHandler);
 
   app.use(errorHandler);
 
